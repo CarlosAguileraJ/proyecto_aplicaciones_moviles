@@ -5,6 +5,7 @@ import 'Modelos/pelicula_modelos.dart'; // importamos file
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:intl/intl.dart'; //paquete modificar formato de fecha
 import 'detalles.dart';
+import 'ajustes.dart';
 
 const baseUrl =
     "https://api.themoviedb.org/3/movie/"; //constante peliculas now playing
@@ -54,6 +55,7 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
     _fetchUpcomingMovies();
     _fetchPopularMovies();
     _fetchTopRateMovies();
+
   }
 
   //crear funbcion retornar peliculas
@@ -100,6 +102,14 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
       topRateMovies = Pelicula.fromJson(
           decodeJson); //llamamos metodo json para decodificacion
     });
+  }
+
+  void _abrirajustes(){
+    Navigator.of(context).push(
+        MaterialPageRoute<void>(
+            builder: (context) => ajustes()
+        )
+    );
   }
 
   //widget para construir carousel
@@ -233,17 +243,13 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
               color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
         centerTitle: true, //centramos el titulo
-        leading: IconButton(
-          icon: Icon(Icons.home),
-          onPressed: () {
-            //icono
-          },
-        ),
+
         actions: <Widget>[
           //ingresar serie de widgets
-          IconButton(
-            icon: Icon(Icons.search), //icono de busqueda
-            onPressed: () {},
+         IconButton(
+            icon: Icon(Icons.language), //icono de busqueda
+           color: Colors.white70,
+            onPressed: _abrirajustes
           )
         ],
       ),
@@ -322,3 +328,5 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
   } //privado
 
 }
+
+
