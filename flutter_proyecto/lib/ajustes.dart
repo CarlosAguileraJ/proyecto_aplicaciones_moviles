@@ -46,7 +46,7 @@ class _ajustesState extends State<ajustes> {
                               color: Colors.teal)),
                     ])),
                 ),
-                Text("\n "),
+                
                 Divider(color: Colors.teal,),
 
                 ListTile(
