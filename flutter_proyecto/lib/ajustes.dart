@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ajustes extends StatefulWidget {
   @override
@@ -7,13 +9,26 @@ class ajustes extends StatefulWidget {
 
 class _ajustesState extends State<ajustes> {
   String _group1SelectedValue;
+  int idioma;
 
   @override
   void initState() {
     _group1SelectedValue = "";// agregar aqui variable donde se almacenara idioma
+    _guardaridioma();
 
     super.initState();
   }
+
+
+
+  _guardaridioma() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() { idioma
+       = (prefs.getInt('idioma') ?? 0) + 1;
+      prefs.setInt('idioma', idioma);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,14 +90,14 @@ class _ajustesState extends State<ajustes> {
                 ),
                 ListTile(
                   title: Text(
-                    "Otro",
+                    "Italiano",
                     style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white70),
                   ),
                   leading: Radio(
-                      value: "Otro",
+                      value: "Italiano",
                       groupValue: _group1SelectedValue,
                       onChanged: _group1Changes),
                 ),
@@ -95,8 +110,37 @@ class _ajustesState extends State<ajustes> {
                       size: 25.0,
                       color: Colors.teal,
                     ),
-                    label: Text("Guardar"),
-                    onPressed: (){},
+                    label: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text("Guardar", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+                    ),
+                    onPressed: (){
+                      if(_group1SelectedValue == "Español"){
+                        idioma = 1;
+                      }
+                      if(_group1SelectedValue == "Inglés" ){
+                        idioma = 2;
+                      }
+                      if(_group1SelectedValue == "Italiano" ){
+                        idioma = 3;
+                      }
+                      _guardaridioma;
+
+
+                      return showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            // Recupera el texto que el usuario ha digitado utilizando nuestro
+                            // TextEditingController
+                            content: Text("Preferencia de idioma guardada" + "\nIdioma guardado: $_group1SelectedValue",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            contentTextStyle: TextStyle(color: Colors.teal),
+                          );
+                        },
+                      );
+                    },
                   ),
                 )
               ],

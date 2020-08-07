@@ -6,19 +6,26 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:intl/intl.dart'; //paquete modificar formato de fecha
 import 'detalles.dart';
 import 'ajustes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-const baseUrl =
-    "https://api.themoviedb.org/3/movie/"; //constante peliculas now playing
-const baseImagenUrl =
-    "https://image.tmdb.org/t/p/"; //url base  para accder a imagenes
+const baseUrl = "https://api.themoviedb.org/3/movie/"; //constante peliculas now playing
+const baseImagenUrl = "https://image.tmdb.org/t/p/"; //url base  para accder a imagenes
 const apiKey = "5053a39cc3fbd46cff101eeca1bdf2f3";
 
-const nuevoUrl = "${baseUrl}now_playing?api_key=$apiKey&language=es"; // completamos url para acceso api lo mas nuevo
-const popularUrl = "${baseUrl}popular?api_key=$apiKey&language=es";
-const proximosUrl = "${baseUrl}upcoming?api_key=$apiKey&language=es";
-const mejorvaloradoUrl = "${baseUrl}top_rated?api_key=$apiKey&language=es";
+String counter;
+
+var nuevoUrl = "${baseUrl}now_playing?api_key=$apiKey&language=es"; // completamos url para acceso api lo mas nuevo
+var popularUrl = "${baseUrl}popular?api_key=$apiKey&language=es";
+var proximosUrl = "${baseUrl}upcoming?api_key=$apiKey&language=es";
+var mejorvaloradoUrl = "${baseUrl}top_rated?api_key=$apiKey&language=es";
+
+//var mejorvaloradoUrl = "${baseUrl}top_rated?api_key=$apiKey&language=$counter";
+
+
 
 void main() => runApp(MaterialApp(
+
+
       debugShowCheckedModeBanner: false, //ocultar barra modo debug
       title: "PELICULAS",
       theme: ThemeData.dark(), // asignamos tema dark
@@ -50,13 +57,32 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
   void initState() {
     //constructor clase padre
     super.initState();
+    _loadCounter();
     //funcion para trae datos
     _fetchNowPlayingMovies();
     _fetchUpcomingMovies();
     _fetchPopularMovies();
     _fetchTopRateMovies();
 
+
   }
+
+  _loadCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      counter = (prefs.getString('counter') ?? "es");
+    });
+  }
+
+  _incrementCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      counter = (prefs.getString('counter') ?? "es");
+      prefs.setString('counter', counter);
+    });
+  }
+
+
 
   //crear funbcion retornar peliculas
   void _fetchNowPlayingMovies() async {
@@ -104,13 +130,7 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
     });
   }
 
-  void _abrirajustes(){
-    Navigator.of(context).push(
-        MaterialPageRoute<void>(
-            builder: (context) => ajustes()
-        )
-    );
-  }
+
 
   //widget para construir carousel
   Widget _buildCarouselSlider() => CarouselSlider(
@@ -133,6 +153,7 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
   //cambio de pantallas
   Widget _buildMovieItem(Results movieItem) {
     heroTag += 1;
+    _loadCounter;
     movieItem.heroTag = heroTag;
     return Material(
       elevation: 15.0,
@@ -153,6 +174,7 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
       ), //efect//animacion de transicion de pantallaso de tap
     );
   }
+
 
   // detalles de la pelicula en contenedor
   Widget _buildMoviesListItem(Results movieItem) => Material(
@@ -232,6 +254,7 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
   //contruir arbol widget
   @override
   Widget build(BuildContext context) {
+    _loadCounter;
     // TODO: implement build
     return Scaffold(
       //appbar
@@ -249,7 +272,40 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
          IconButton(
             icon: Icon(Icons.language), //icono de busqueda
            color: Colors.white70,
-            onPressed: _abrirajustes
+                onPressed: () {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => SimpleDialog(
+                      title: Text('Seleccione un idioma'),
+                      children: <Widget>[
+                        ListTile(
+                          leading: Icon(Icons.language),
+                          title: Text('Español'),
+                          onTap: ()  {
+                            counter="es";
+                             return _incrementCounter;
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.language),
+                          title: Text('Ingles'),
+                          onTap: ()  {
+                            counter="en";
+                             return _incrementCounter;
+                          }
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.language),
+                          title: Text('Italiano'),
+                          onTap: () {
+                            counter="it";
+                            return _incrementCounter;
+                          }
+                        ),
+                      ],
+                    ),
+                  );
+                },
           )
         ],
       ),
@@ -304,26 +360,6 @@ class _MyPeliculasApp extends State<MyPeliculasApp> {
           ],
         ), //ingresar listas
       ),
-      /*bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Colors.amber,
-        currentIndex: _currentIndex,
-        onTap: (int index){
-          setState(() =>_currentIndex= index);//almacenar indice actual
-        },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.local_movies),
-          title: Text("Todas las peliculas")
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.tag_faces),
-            title: Text("Tikets"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Usuario")
-          )
-        ],
-      ),*/
     );
   } //privado
 
