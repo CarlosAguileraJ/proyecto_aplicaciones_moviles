@@ -11,6 +11,7 @@ const apiKey = "?api_key=5053a39cc3fbd46cff101eeca1bdf2f3";
 
 const baseUrl = "https://api.themoviedb.org/3/movie/";
 const baseImagenUrl = "https://image.tmdb.org/t/p/";
+String duracion="Duración",lanzamiento="Lanzamiento",sinopsis="Sinopsis",actores="Actores",equipo1="Equipo",detalles="Detalles";
 
 class MovieDetail extends StatefulWidget {
   final Results pelicula;
@@ -56,10 +57,10 @@ class _MovieDetails extends State<MovieDetail> {
   }
 
   String _getMovieDuration(int runtime) {
-    if (runtime == null) return "No hay datos sobre la duración";
+    if (runtime == null) return "0";
     double movieHours = runtime / 60.0;
     int movieMinutes = ((movieHours - movieHours.floor()) * 60).round();
-    return "Duración: ${movieHours.floor()}h ${movieMinutes}min";
+    return "$duracion: ${movieHours.floor()}h ${movieMinutes}min";
   }
 
   @override
@@ -109,7 +110,7 @@ class _MovieDetails extends State<MovieDetail> {
           color: Colors.white70,
         ),
         Text(
-          "Lanzamiento: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(widget.pelicula.releaseDate))}",
+          "$lanzamiento: ${DateFormat("dd-MM-yyyy").format(DateTime.parse(widget.pelicula.releaseDate))}",
           style: TextStyle(fontSize: 14.0),
         ) //,
         // conversion de formato de fecha
@@ -123,10 +124,10 @@ class _MovieDetails extends State<MovieDetail> {
         children: <Widget>[
           Divider(),
           Text(
-            "Sinopsis",
+            "$sinopsis",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.white70,
+                color: Colors.teal,
                 fontSize: 20.0),
           ),
           SizedBox(
@@ -176,7 +177,7 @@ class _MovieDetails extends State<MovieDetail> {
           Padding(
             padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
             child: Text(
-              "Actores",
+              "$actores",
               style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
@@ -237,7 +238,7 @@ class _MovieDetails extends State<MovieDetail> {
           Padding(
             padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
             child: Text(
-              "Equipo",
+              "$equipo1",
               style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
@@ -294,7 +295,7 @@ class _MovieDetails extends State<MovieDetail> {
         elevation: 0.0,
         centerTitle: true,
         title: Text(
-          "Detalles",
+          "$detalles",
           style: TextStyle(
               color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.bold),
         ),
@@ -311,7 +312,7 @@ class _MovieDetails extends State<MovieDetail> {
           creditos,
           Divider(),
           equipo,
-          Text(""),
+          Text("\n\n"),
         ],
       ), //detalles de la pelicula
     );
