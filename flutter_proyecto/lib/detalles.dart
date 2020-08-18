@@ -20,10 +20,10 @@ class MovieDetail extends StatefulWidget {
   MovieDetail({this.pelicula});
 
   @override
-  _MovieDetails createState() => new _MovieDetails();
+  MovieDetails createState() => new MovieDetails();
 }
 
-class _MovieDetails extends State<MovieDetail> {
+class MovieDetails extends State<MovieDetail> {
   String movieDetailUrl;
   String movieCreditsUrl;
   MovieDetailModel movieDetails;

@@ -27,11 +27,13 @@ int _totalItemstop = 0;
 int t;
 String prox = "Proximamente",nowplay="Actuales",pop="Populares",top ="Mejor calificadas",inicio="Inicio";
 
+
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false, //ocultar barra modo debug
       title: "PELICULAS",
       theme: ThemeData.dark(), // asignamos tema dark
       home: MyPeliculasApp(storage: idiomaStorage()),
+
     ));
 
 class idiomaStorage {
@@ -55,9 +57,10 @@ class idiomaStorage {
 
       return contents;
     } catch (e) {
-      // Si encuentras un error, regresamos 0
+      // Si encuentra un error, regresamos
       return "es";
     }
+
   }
 
   Future<File> writeidioma(String idioma) async {
@@ -74,12 +77,13 @@ class MyPeliculasApp extends StatefulWidget {
   MyPeliculasApp({Key key, @required this.storage}) : super(key: key);
 
   @override
-  _MyPeliculasApp createState() =>
-      new _MyPeliculasApp(); //crear instancia del objeto
+  MyPeliculaApp createState() =>
+      new MyPeliculaApp(); //crear instancia del objeto
 }
 
 //objeto tipo estado
-class _MyPeliculasApp extends State<MyPeliculasApp> {
+class MyPeliculaApp extends State<MyPeliculasApp> {
+
   Pelicula nowPlayingMovies; //creamos variable
   Pelicula upcomingMovies;
   Pelicula popularMovies;
