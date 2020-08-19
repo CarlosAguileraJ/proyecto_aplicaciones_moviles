@@ -591,16 +591,16 @@ class MyPeliculaApp extends State<MyPeliculasApp> {
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(
                   children: <Widget>[
-                    /*Container(
-                       child: Image.network(
-                       "${baseImagenUrl}w500/m0ObOaJBerZ3Unc74l471ar8Iiy.jpg", //imagen de fondo 7WsyChQLEftFiDOVTGkv3hFpyyt.jpg
+                    Container(
+                       child: Image.asset(
+                       "lib/assets/fondo.jpg", //imagen de fondo 7WsyChQLEftFiDOVTGkv3hFpyyt.jpg
                         fit: BoxFit.cover,
                         width: 1000.0,
                         colorBlendMode:
                             BlendMode.dstIn, //desplegar imagen de fondo
                         color: Colors.blue.withOpacity(0.5),
                       ),
-                    ),*/
+                    ),
                     Padding(
                         padding: const EdgeInsets.only(top: 15.0),
                         child: _buildCarouselSlider() // llamamos carousel
