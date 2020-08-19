@@ -96,8 +96,10 @@ class MyPeliculaApp extends State<MyPeliculasApp> {
   void initState() {
     super.initState();
 
+
     widget.storage.readidioma().then((String value) {
       setState(() {
+
         idioma = value;
         if (idioma == "en") {
           prox = "Upcoming";
@@ -273,6 +275,7 @@ class MyPeliculaApp extends State<MyPeliculasApp> {
                     movieItem)) //obtenemos las imagenes de poster de la api concatenando link api key y imagen mediante mapeo
                 .toList(), //almacenar en variable resultado
         autoPlay: true, //activamos autoplay
+
         height: 240.0, // asignamos altura poster altura
         viewportFraction: 0.5, // distancia
       );
@@ -588,16 +591,16 @@ class MyPeliculaApp extends State<MyPeliculasApp> {
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(
                   children: <Widget>[
-                    Container(
-                      child: Image.network(
-                        "${baseImagenUrl}w500/m0ObOaJBerZ3Unc74l471ar8Iiy.jpg", //imagen de fondo 7WsyChQLEftFiDOVTGkv3hFpyyt.jpg
+                    /*Container(
+                       child: Image.network(
+                       "${baseImagenUrl}w500/m0ObOaJBerZ3Unc74l471ar8Iiy.jpg", //imagen de fondo 7WsyChQLEftFiDOVTGkv3hFpyyt.jpg
                         fit: BoxFit.cover,
                         width: 1000.0,
                         colorBlendMode:
                             BlendMode.dstIn, //desplegar imagen de fondo
                         color: Colors.blue.withOpacity(0.5),
                       ),
-                    ),
+                    ),*/
                     Padding(
                         padding: const EdgeInsets.only(top: 15.0),
                         child: _buildCarouselSlider() // llamamos carousel
