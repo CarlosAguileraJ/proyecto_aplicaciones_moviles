@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_proyecto/detalles.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 
@@ -33,14 +34,18 @@ void main() {
       };
 
       expect(find.byType(AppBar), findsNWidgets(2));// se esperan tener dos appbar
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);// prueba de los CircularProgressIndicator para  los item de peliculas
+      expect(find.byType(IconButton), findsOneWidget);// se espera tener un IconButton para la opcion de idiomas
 
-      // finalizar los temporizadores pendientes
+
+      // finalizar los temporizadores pendientes, se agrego por que al momento de realizar el test marcaba error por que no se estaban finalizando
+      // los temporizadores
       final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized() as TestWidgetsFlutterBinding;
       await binding.runTest(() async {
         final Timer timer = Timer(const Duration(seconds: 1), () {});
         expect(timer.isActive, true);
       }, () {});
+
 
 
 

@@ -1,21 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;// servicio web
 import 'dart:convert'; //libreria para realizar conversion de JSON
 import 'Modelos/pelicula_modelos.dart'; // importamos file
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';// widget carousel
 import 'package:intl/intl.dart'; //paquete modificar formato de fecha
 import 'detalles.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart';//manejo de archivos
+import 'package:path_provider/path_provider.dart';//manejo de archivos
 
 const baseUrl =
-    "https://api.themoviedb.org/3/movie/"; //constante peliculas now playing
+    "https://api.themoviedb.org/3/movie/"; //constante link api peliculas base
 const baseImagenUrl =
     "https://image.tmdb.org/t/p/"; //url base  para accder a imagenes
-const apiKey = "5053a39cc3fbd46cff101eeca1bdf2f3";
+const apiKey = "5053a39cc3fbd46cff101eeca1bdf2f3"; // apikey creado
 
 String idioma = "es";
 int _totalItems = 0;
@@ -36,18 +36,19 @@ void main() => runApp(MaterialApp(
 
     ));
 
+//obtenemos direccion almacenamioento del archivo
 class idiomaStorage {
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
 
     return directory.path;
   }
-
+//creamos archivo
   Future<File> get _localFile async {
     final path = await _localPath;
     return File('$path/idioma.txt');
   }
-
+// leer el idioma
   Future<String> readidioma() async {
     try {
       final file = await _localFile;
@@ -62,7 +63,7 @@ class idiomaStorage {
     }
 
   }
-
+// escribir en el archivo
   Future<File> writeidioma(String idioma) async {
     final file = await _localFile;
 
